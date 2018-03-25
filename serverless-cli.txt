@@ -21,3 +21,45 @@ Generate a Boiler Plate Code for our NodeJS API:
 =====================================================
 c:\API> sls create --template aws-nodejs
 
+USER POOL ID: us-east-2_Rdu19UGe1
+USER POOL ARN:  arn:aws:cognito-idp:us-east-2:186688768835:userpool/us-east-2_Rdu19UGe1
+
+Login to Cognito Using AWS CLI:
+1. Install Cognito CLI OS Specific Version
+2. c:\> aws --version
+	-Should return valid aws version information if the installation is sucessful.
+2. aws cognito-idp admin-initiate-auth --user-pool-id us-east-2_Rdu19UGe1 --client-id 3li6j4u283umakidp9s9cuurja --auth-flow ADMIN_NO_SRP_AUTH --auth-parameters USERNAME=goadswapnil,PASSWORD=654321 --region us-east-2
+
+3: Sample Response:
+
+{
+    "ChallengeName": "NEW_PASSWORD_REQUIRED",
+    "Session": "t0LC6YKMbMsZU53fQevEQWssPerr_-V2gBGp4RiTWCqIOEHMji19yPfQMz67_7X-Q1aK07syq78SuxrkB4Zdl1W3cSLTgiWkqZzVl11hu7iZj_OB1J8CD5Dx2qHMbfbbBemSV4_5cjIeJjxHzFrN5_wtle8kQonUkehmVku4X1KMRyrSQJm6p5OlSl4k4giUwscsiAgcmMF_1LTABf85hvjT_phm_UTlVtgd6Viyne1xRTyLnOW7_BaIi3-I6HXGVicrYx62NUt87sTc-OTteRCXk-0TKnksgk4jCwpQPUE6VIRzGpXFNSDABwCYZ6WAnWXm4ZCG9JOZZebSgGuQoApJjAypVw6pU8pGc1-Cz5X04k4wYjPkCJ4hj25T8GIS_TAwVQGnNA0vKHR8rPRWk9AvRHa_nkg9bVCi9oFlmLTYNAhPom3wXcjdUNoHI2su6qMj_JBlK9OWqRer-YU42aiNDeC266dkexb4ThjxUmuCDb2EGxK0AANqsRLyf9E8jq4umhmDRPqsC6mQiE2w7ZfuKPGOra3Nla_Z16iYTmM-iHqii_DyqCdQipsic7FDmru3rVcdJykTheWGUW9vpvffG_Cj0r62ADFL8T4v-Ljea8FUolMJtn35SBiuZ9C5F5jXbl9HO_Wew-THw9LFYY0v8kBdDf9MZrNqvr3_goaC38upLlB6jF6AsA616AlFufmVggdXd_sARN6IDnRdblUbDIYxhsIbVHpWWdtZFKrOaaHuyabcwlpqVFDY2jVkRn9jv8oSOlejYNKQ5AXU9xtFKBgdoTWTnpuCvofNnkghtOQMncoeoBZ8_ffxfewieNlrXEzqF5c",
+    "ChallengeParameters": {
+        "USER_ID_FOR_SRP": "goadswapnil",
+        "requiredAttributes": "[]",
+        "userAttributes": "{\"email_verified\":\"true\",\"phone_number_verified\":\"true\",\"phone_number\":\"+17337492807\",\"email\":\"goadswapnil@gmail.com\"}"
+    }
+}
+
+4: Command to Response to Challenge:
+=====================================================================================================
+c:\>aws cognito-idp admin-respond-to-auth-challenge --user-pool-id us-east-2_Rdu19UGe1 --client-id 3li6j4u283umakidp9s9cuurja --challenge-name NEW_PASSWORD_REQUIRED --challenge-responses NEW_PASSWORD=654321,USERNAME=goadswapnil --region us-east-2 --session t0LC6YKMbMsZU53fQevEQWssPerr_-V2gBGp4RiTWCqIOEHMji19yPfQMz67_7X-Q1aK07syq78SuxrkB4Zdl1W3cSLTgiWkqZzVl11hu7iZj_OB1J8CD5Dx2qHMbfbbBemSV4_5cjIeJjxHzFrN5_wtle8kQonUkehmVku4X1KMRyrSQJm6p5OlSl4k4giUwscsiAgcmMF_1LTABf85hvjT_phm_UTlVtgd6Viyne1xRTyLnOW7_BaIi3-I6HXGVicrYx62NUt87sTc-OTteRCXk-0TKnksgk4jCwpQPUE6VIRzGpXFNSDABwCYZ6WAnWXm4ZCG9JOZZebSgGuQoApJjAypVw6pU8pGc1-Cz5X04k4wYjPkCJ4hj25T8GIS_TAwVQGnNA0vKHR8rPRWk9AvRHa_nkg9bVCi9oFlmLTYNAhPom3wXcjdUNoHI2su6qMj_JBlK9OWqRer-YU42aiNDeC266dkexb4ThjxUmuCDb2EGxK0AANqsRLyf9E8jq4umhmDRPqsC6mQiE2w7ZfuKPGOra3Nla_Z16iYTmM-iHqii_DyqCdQipsic7FDmru3rVcdJykTheWGUW9vpvffG_Cj0r62ADFL8T4v-Ljea8FUolMJtn35SBiuZ9C5F5jXbl9HO_Wew-THw9LFYY0v8kBdDf9MZrNqvr3_goaC38upLlB6jF6AsA616AlFufmVggdXd_sARN6IDnRdblUbDIYxhsIbVHpWWdtZFKrOaaHuyabcwlpqVFDY2jVkRn9jv8oSOlejYNKQ5AXU9xtFKBgdoTWTnpuCvofNnkghtOQMncoeoBZ8_ffxfewieNlrXEzqF5c
+
+
+
+========================================================================================================
+AWS Cognito's Response to Challenge Response:
+========================================================================================================
+{
+    "ChallengeParameters": {},
+    "AuthenticationResult": {
+        "AccessToken": "eyJraWQiOiJUNEE3UjFLcnBoOGZHbHRqUERXNjNYTTZIeUoyS3YxTExzRFhMWTlnYnNRPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1NGFmNGI4MC1jNjQzLTQ3YTUtYTEzNC1mYzQ3OWU5OWEzYzYiLCJldmVudF9pZCI6ImJkMmM2YWVhLTMwMzMtMTFlOC05NGQ5LWYzMDg2MWY4ZjI5OCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE1MjE5ODU5NDEsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0yX1JkdTE5VUdlMSIsImV4cCI6MTUyMTk4OTU0MSwiaWF0IjoxNTIxOTg1OTQxLCJqdGkiOiIzNzExODcwMy03ZmZlLTQzYzQtOWM1ZC02MmYzOTczNGVkYzIiLCJjbGllbnRfaWQiOiIzbGk2ajR1MjgzdW1ha2lkcDlzOWN1dXJqYSIsInVzZXJuYW1lIjoiZ29hZHN3YXBuaWwifQ.As5WWSIlfoiPdXf_wU3ZipaEhumgkK4IbYbSIICrCC6yJMW8MM76wmWAIrZk8ebjf-ENyvFiBpWnmmLGd2fwfoLyLQnfoPmUoZLmpEuEMTohP43UJ_Tsj8dAMhbveccFqphtHd26rj_BEm7symou2bfvMq_eEl6ZgI1Vjtld4USwxH9Ue-0jkgVzJ-p85cAIcsqgdYsMtDDLyxd0LXyBgxXQlUMQnplGznwlRtX9_5POK3RCZ4uzeSWzmU95R4fNwzf42p-pqLVizICKfyGgMoC-5DtSWY90RyIBr7ekZzG0Lb99GHxix_mi_Gn85rafxPzj7-lmuOrlVdhyJVpYqw",
+        "ExpiresIn": 3600,
+        "TokenType": "Bearer",
+        "RefreshToken": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.HvA__jhN_qJgUW3TE0QaTgg-UtTKzHfD1YHPogIalCSbg_CL965SCDQFk1DYulZXzb6whJGLz1XCUB36x3plZuTEVmcjlp0EDKL0X-j8mSxQUaI2Dv81md_vRviVq8UkW4OHbEZCJhnK9V3ju1X7exdM6DNug-GJ6BdEOR9yu8u0qj5yDltRmIXtEGrvx2oDB2YEXHUW0OIimvSoD32Epj5a_MWh0y7DzFiG2NCpNplBPbbasbYFtO9UcV__Ar_d3_45yO_ShQqCrDak0aP7smUpyhWF_2_5XYcw0GWTMVVlK_xP5-_M0qt6Z0uWikH7bBymocqi4BSTqE1NqoMB9g.rtGndDScvuyaO9CP.toavTo0ahRanvlHfVits4Je29hbC6RKigtQHDDeHT6akMR2gwrY-v4AjkdGKZou7wkxAcDfUhQ6P5K7NczKuu4ZuzyE12Pw2xfmEVFFB7ifroEyEFyjNRTphkfDlufUvFHX4-UcyMSu0RforszsJK2NSYy9DIrwzOfgr7R3z_tPQSYdCVtk18YU0iZFHQCWNk8aXbOIRB6X10ceez42SiF9k4-R6A3GWot98YjnNMEasfqMzSCxwkqEJAoYg1bhGoob1YV13YKqCP6OYP0Jdk7nr9Ga6U-mQwHoq4JUI4Z9NZcQINxCHymRfKi_L2cUvusSc3-Jnh1_57bA3dL45oqAav7IDtLVnJtiL_I7DgbZCEeAvHwm-tixqlgkU4tHNiWydcIRtFrpV_IYCi70SF-AK19R4W8DSl3A_iJmDEhHF2CKCvO8m3IJC5dCh9zCCP5dCPCmUYohKi7rVoF4zrxh5rKCKFnj0YZs-aZ851LqiIM5P_AuqaN_PlLfo0WpH_HhQnYoCK3UB95PKnYU4efpt_U2RURQZo4XuaiaU926zeV6J9bZO4k_GPBQOs-Q1Mufe0-yTxXcyx7sAO0uT6zWLWrDkyKVmWFb2xuE02IkikJzOduInDS9ZnFHG2lEFVns0WEOjWQYIt2Tkur3wg60j2LaJxqtvDEmi2Dbd75UDZxCUXuaGlJKsV-tgkc7oTvIZ0SXsSwuk0AgZ1k7Jbd4x3Nt9-qRH-dlK0AQU6GRidG4z9jEWBzTsxjS5Qlf350paE0Y5tuD_vhgYWu24JfuVcgw1vqbSk7TSHegGHS4FJcebUUJ4gOciKbmyxkGphgP8MMBqui_sIYm4-yTcTueJEbPkXGXMr97-0InHPFmWyayx2vsa9A0q7RYudohqGd7D8oVYfF-l7bFi_ekOMdrhcd4K5L4hsqjqsWC0ynlBNg8m7MfEgVEX7OCVR6Z_sziIoi-hsafqm5aB_2PgZBTu30aElH0LK78RFEoSwg2EmrTCYviY3QJfnIOZc3xmJyHYQLlpmz5tt_XMUDuOVsoce-_uvFRitiZsjRfmcWHK-uy9dcvbq3b59iJPjhjbf5btj2NvIg0yCIV8jdORfPeKBe26T09EgDYOTRzZBD5rFC-lP5knhfuxMzq8oBFCHnIIIdxgigl0lbWBil4bUNuYLWz83WAWID4TyuEKNb5_wMm9WPx8_Sxk4PDuJpEMFnFdgSeg-CKLx_fwm5lbZTa7m1QRgH5bEHbE4UZbqvpmI6wkX4jhIZpdzZoDI-2qeQv-mSd38FgLACA.BleVLD2MZ5KrvWvUdVDIMg",
+        "IdToken": "eyJraWQiOiIzQVhVaFZRUzJCeWhcL1k5eEU4ZG16YXRPUkZhXC9pM29BcXJZcGpKVENXRkk9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI1NGFmNGI4MC1jNjQzLTQ3YTUtYTEzNC1mYzQ3OWU5OWEzYzYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMi5hbWF6b25hd3MuY29tXC91cy1lYXN0LTJfUmR1MTlVR2UxIiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjp0cnVlLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29hZHN3YXBuaWwiLCJhdWQiOiIzbGk2ajR1MjgzdW1ha2lkcDlzOWN1dXJqYSIsImV2ZW50X2lkIjoiYmQyYzZhZWEtMzAzMy0xMWU4LTk0ZDktZjMwODYxZjhmMjk4IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE1MjE5ODU5NDEsInBob25lX251bWJlciI6IisxNzMzNzQ5MjgwNyIsImV4cCI6MTUyMTk4OTU0MSwiaWF0IjoxNTIxOTg1OTQxLCJlbWFpbCI6ImdvYWRzd2FwbmlsQGdtYWlsLmNvbSJ9.ceWbfz6QUkdyuA24RqQyRr3lQLTW9WxtU1IoQ9gAv5YRiNSovvnF1x78bM_hcbe3HIACV8TWvkcr8HHZ40gyOj8KS6BNWEyG_Ai62wjNfQuKUMxNjAFERYVCW3K4oHkRJV6XlOQLkQGfmdymjeFCjQW3RMC_N-qNzuV8OVBzRU_uSxqfRJdknAG7RtG4qdNBh0YPcS1TdTMuytGRkx4Ph6eoq8bis28ih6F74ECKbc3CIo0eY3iM7_5_xXxYYzQoD0p59XneRyReAW3SoymsLNXZTtCDoS_XMDcUM8eit5eEvohN94hLqihlRtI4K565S2CL0FXEdYcGYNy3jkKD6Q"
+    }
+}
+
+We Should pass the ID_TOKEN

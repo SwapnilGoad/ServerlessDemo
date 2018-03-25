@@ -10,29 +10,19 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.submit = (event, context, callback) => {
   console.log("Receieved request submit candidate details. Event is", event);
-  const jstr = JSON.stringify(event);
-  const requestBody = JSON.parse(jstr);
-  const fullname = requestBody.fullname;
-  const email = requestBody.email;
-  const experience = requestBody.experience;
- 
   
-  if(typeof fullname !== 'string' || typeof email !== 'string' || typeof experience !== 'number' || !validator.validate(email)){
-    console.error('Validation Failed')
-    callback(new Error('Couldn\'t submit candidate because of validation errors.'));
-    return;
-  }
-
-  const candidate = candidateInfo(fullname, email, experience);  
+  var body = JSON.parse(event.body);
+  
+  const candidate = candidateInfo(body.fullname, body.email, body.experience);  
 
   const candidateSubmissionFx = R.composeP(submitCandidateEmailP,submitCandidateP, checkCandidateExistsP);
   
   candidateSubmissionFx(candidate)
   .then(res => {
-      console.log(`Successfully submitted ${fullname}(${email}) candidate to system`);
+      console.log(`Successfully submitted ${body.fullname}(${event.email}) candidate to system`);
       callback(null, successResponseBuilder(
           JSON.stringify({
-              message: `Sucessfully submitted candidate with email ${email}`,
+              message: `Sucessfully submitted candidate with email ${body.email}`,
               candidateId: res.id
           }))
       );
@@ -42,7 +32,7 @@ module.exports.submit = (event, context, callback) => {
       callback(null, failureResponseBuilder(
           409,
           JSON.stringify({
-              message: `Unable to submit candidate with email ${email}`
+              message: `Unable to submit candidate with email ${body.email}: ${err}`
           })
       ))
   });
@@ -108,6 +98,10 @@ const checkCandidateExistsP = (candidate) => {
 
 const submitCandidateP = (candidate) => {
   console.log('submitCandidateP() Submitting candidate to system');
+  if(typeof candidate.fullname !== 'string' || typeof candidate.email !== 'string' || typeof candidate.experience !== 'number' || validator.validate(candidate.email)===false){
+        console.error('Validation Failed', validator.validate(candidate.email))
+        return Promise.reject(new Error('Couldn\'t submit candidate because of validation errors.'));   
+  }  
   const candidateItem = {
       TableName: process.env.CANDIDATE_TABLE,
       Item: candidate,
@@ -165,4 +159,3 @@ const candidateInfo = (fullname, email, experience) => {
       updatedAt: timestamp,
   };
 };
-

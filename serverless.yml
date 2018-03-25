@@ -12,7 +12,10 @@
 # Happy Coding!
 
 service: candidate
-
+custom:  
+  cognitoPoolArn: "arn:aws:cognito-idp:us-east-2:186688768835:userpool/us-east-2_Rdu19UGe1"
+  cognitoAuthorizer:
+    arn: ${self:custom.cognitoPoolArn}
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
@@ -47,6 +50,7 @@ functions:
           path: candidate
           method: post
           cors: true
+          authorizer: ${self:custom.cognitoAuthorizer}
   listCandidates:
     handler: api/candidate.list
     memorySize: 128
@@ -56,6 +60,7 @@ functions:
           path: candidates
           method: get
           cors: true     
+          authorizer: ${self:custom.cognitoAuthorizer}
   candidateDetails:
     handler: api/candidate.get
     events:
@@ -63,7 +68,7 @@ functions:
           path: candidates/{id}
           method: get
           cors: true          
-
+          authorizer: ${self:custom.cognitoAuthorizer}
 resources:
   Resources:
     CandidateDynamoDBTable:
